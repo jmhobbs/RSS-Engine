@@ -1,0 +1,22 @@
+application: rssengine
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+
+- url: /images
+  static_dir: static/images
+
+- url: /css
+  static_dir: static/css
+
+- url: /js
+  static_dir: static/js
+
+- url: /cron/.*
+  script: cronjobs.py
+  login: admin
+
+- url: /.*
+  script: rssengine.py

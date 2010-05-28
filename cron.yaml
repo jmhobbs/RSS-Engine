@@ -1,0 +1,4 @@
+cron:
+- description: RSS Fetch
+  url: /cron/fetch
+  schedule: every 5 minutes
