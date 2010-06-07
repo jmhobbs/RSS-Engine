@@ -14,6 +14,10 @@ handlers:
 - url: /js
   static_dir: static/js
 
+- url: /queue/.*
+  script: cronjobs.py
+  login: admin
+
 - url: /cron/.*
   script: cronjobs.py
   login: admin

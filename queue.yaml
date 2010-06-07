@@ -1,0 +1,8 @@
+queue:
+- name: default
+  rate: 1/s
+- name: mail
+  rate: 2000/d
+  bucket_size: 10
+- name: fetch
+  rate: 5/s

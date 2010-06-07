@@ -1,4 +1,4 @@
 cron:
-- description: RSS Fetch
-  url: /cron/fetch
+- description: RSS Queue
+  url: /cron/queue
   schedule: every 5 minutes
