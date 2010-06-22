@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block title %}RSS Engine - Subscribe{% endblock %}
+
+{% block content %}
+<h1>Subscribe To A New Feed</h1>
+<form method="POST" action="">
+	<label for="url">Feed URL:</label>
+	<input type="text" value="" name="url" id="url" /><br/>
+	<input type="submit" value="Subscribe" />
+</form>
+{% endblock %}
