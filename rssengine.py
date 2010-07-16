@@ -93,8 +93,10 @@ class SubscriptionsPage ( webapp.RequestHandler ):
 	@login_and_register
 	def get ( self ):
 		user = users.get_current_user()
+		subscriptions = db.GqlQuery( "SELECT * FROM SubscriptionModel WHERE user = :1", user )
 		template_values = {
-			'nickname': user.nickname()
+			'nickname': user.nickname(),
+			'subscriptions': subscriptions
 		}
 		path = os.path.join( os.path.dirname( __file__ ), 'templates/subscriptions.html' )
 		self.response.out.write( template.render( path, template_values ) )
@@ -103,20 +105,36 @@ class SubscribePage ( webapp.RequestHandler ):
 	@login_and_register
 	def get ( self ):
 		user = users.get_current_user()
-		q = db.GqlQuery( "SELECT * FROM UserModel WHERE user = :1", user )
-		user = q.get()
-		subscriptions = db.GqlQuery( "SELECT * FROM SubscriptionModel WHERE user = :1", user.key() )
 		template_values = {
-			'nickname': user.user.nickname(),
-			'subscriptions': subscriptions.get()
+			'nickname': user.nickname()
 		}
 		path = os.path.join( os.path.dirname( __file__ ), 'templates/subscribe.html' )
 		self.response.out.write( template.render( path, template_values ) )
 
 	@login_and_register
 	def post ( self ):
-		user = users.get_current_user()
-		# TODO
+		
+		url = self.request.get( 'url' ).lower()
+		
+		feeds = db.GqlQuery( "SELECT * FROM FeedModel WHERE path = :1", url )
+		feed = feeds.get()
+		
+		if None == feed:
+			feed = models.FeedModel()
+			feed.path = url
+			feed.put()
+		
+		subscriptions = db.GqlQuery( "SELECT * FROM SubscriptionModel WHERE user = :1 AND feed = :2", users.get_current_user(), feed )
+		subscription = subscriptions.get()
+		
+		if None == subscription:
+			subscription = models.SubscriptionModel()
+			subscription.feed = feed
+			subscription.user = users.get_current_user()
+			subscription.name = self.request.get( 'name' )
+			subscription.put()
+		
+		self.redirect( '/subscriptions' )
 
 application = webapp.WSGIApplication(
 	[

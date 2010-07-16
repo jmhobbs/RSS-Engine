@@ -3,8 +3,17 @@
 {% block title %}RSS Engine - Subscriptions{% endblock %}
 
 {% block content %}
-<h1>Subscriptions For {{nickname}}</h1>
 <p>
-	Uh...
+	<a href="/">Home</a> |
+	<a href="{{logout}}">Log Out</a>
+</p>
+<h1>Subscriptions For {{nickname}}</h1>
+<ul>
+	{% for subscription in subscriptions %}
+	<li>{{subscription.name}}</li>
+	{% endfor %}
+</ul>
+<p>
+	<a href="/subscribe">New Subscription</a>
 </p>
 {% endblock %}

@@ -3,9 +3,13 @@
 {% block title %}RSS Engine - Home{% endblock %}
 
 {% block content %}
+<p>
+	<a href="/subscriptions">Subscriptions</a> |
+	<a href="{{logout}}">Log Out</a>
+</p>
 <h1>RSS Engine</h1>
-<a href="{{logout}}">Log Out</a>
 <p>
 	Hello {{nickname}}.
 </p>
+
 {% endblock %}
