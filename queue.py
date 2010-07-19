@@ -9,7 +9,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 
 class FetchRSS ( webapp.RequestHandler ):
 	def post ( self ):
-		key = self.request.get( 'key' )
+		key = self.request.get( 'path' )
 		return
 
 class SendMail (webapp.RequestHandler):

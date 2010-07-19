@@ -10,7 +10,7 @@
 <h1>Subscriptions For {{nickname}}</h1>
 <ul>
 	{% for subscription in subscriptions %}
-	<li>{{subscription.name}}</li>
+	<li><a href="/subscription?id={{subscription.key}}">{{subscription.name}}</a></li>
 	{% endfor %}
 </ul>
 <p>

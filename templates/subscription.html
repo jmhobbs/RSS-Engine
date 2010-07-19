@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}RSS Engine - Subscription{% endblock %}
+
+{% block content %}
+<p>
+	<a href="/">Home</a> |
+	<a href="/subscriptions">Subscriptions</a> |
+	<a href="{{logout}}">Log Out</a>
+</p>
+<h1>{{subscription.name}}</h1>
+<p>
+	{{subscription.feed.path}}
+</p>
+<p>
+	<a href="/unsubscribe?id={{subscription.key}}" onclick="return confirm('This can not be undone.');">Unsubscribe</a>
+</p>
+{% endblock %}

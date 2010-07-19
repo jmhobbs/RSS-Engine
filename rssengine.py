@@ -67,7 +67,7 @@ class RegisterPage ( webapp.RequestHandler ):
 		}
 		path = os.path.join( os.path.dirname( __file__ ), 'templates/register.html' )
 		self.response.out.write( template.render( path, template_values ) )
-	
+
 	def post ( self ):
 		user = users.get_current_user()
 		if user:
@@ -101,6 +101,22 @@ class SubscriptionsPage ( webapp.RequestHandler ):
 		path = os.path.join( os.path.dirname( __file__ ), 'templates/subscriptions.html' )
 		self.response.out.write( template.render( path, template_values ) )
 
+class SubscriptionPage ( webapp.RequestHandler ):
+	@login_and_register
+	def get ( self ):
+		user = users.get_current_user()
+		subscription = db.get( db.Key( self.request.get( 'id' ) ) )
+
+		if None == subscription or subscription.user != user:
+			self.redirect( '/subscriptions' )
+
+		template_values = {
+			'id': self.request.get( 'id' ).lower(),
+			'subscription': subscription
+		}
+		path = os.path.join( os.path.dirname( __file__ ), 'templates/subscription.html' )
+		self.response.out.write( template.render( path, template_values ) )
+
 class SubscribePage ( webapp.RequestHandler ):
 	@login_and_register
 	def get ( self ):
@@ -113,28 +129,46 @@ class SubscribePage ( webapp.RequestHandler ):
 
 	@login_and_register
 	def post ( self ):
-		
+
 		url = self.request.get( 'url' ).lower()
-		
+
 		feeds = db.GqlQuery( "SELECT * FROM FeedModel WHERE path = :1", url )
 		feed = feeds.get()
-		
+
 		if None == feed:
 			feed = models.FeedModel()
 			feed.path = url
 			feed.put()
-		
+
 		subscriptions = db.GqlQuery( "SELECT * FROM SubscriptionModel WHERE user = :1 AND feed = :2", users.get_current_user(), feed )
 		subscription = subscriptions.get()
-		
+
 		if None == subscription:
 			subscription = models.SubscriptionModel()
 			subscription.feed = feed
 			subscription.user = users.get_current_user()
 			subscription.name = self.request.get( 'name' )
 			subscription.put()
-		
+
 		self.redirect( '/subscriptions' )
+
+class UnsubscribePage ( webapp.RequestHandler ):
+	@login_and_register
+	def get ( self ):
+		user = users.get_current_user()
+		subscription = db.get( db.Key( self.request.get( 'id' ) ) )
+
+		if None == subscription or subscription.user != user:
+			self.redirect( '/subscriptions' )
+
+		subscription.delete()
+
+		template_values = {
+			'id': self.request.get( 'id' ).lower(),
+			'subscription': subscription
+		}
+		path = os.path.join( os.path.dirname( __file__ ), 'templates/unsubscribe.html' )
+		self.response.out.write( template.render( path, template_values ) )
 
 application = webapp.WSGIApplication(
 	[
@@ -142,7 +176,9 @@ application = webapp.WSGIApplication(
 		( '/register', RegisterPage ),
 		( '/pending', PendingPage ),
 		( '/subscriptions', SubscriptionsPage ),
-		( '/subscribe', SubscribePage )
+		( '/subscription', SubscriptionPage ),
+		( '/subscribe', SubscribePage ),
+		( '/unsubscribe', UnsubscribePage )
 	],
 	debug=True )
 

@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}RSS Engine - Unsubscribe{% endblock %}
+
+{% block content %}
+<p>
+	<a href="/">Home</a> |
+	<a href="/subscriptions">Subscriptions</a> |
+	<a href="{{logout}}">Log Out</a>
+</p>
+<h1>{{subscription.name}}</h1>
+<p>
+	{{subscription.feed.path}}
+</p>
+<p>
+	You have been unsubscribed.
+</p>
+{% endblock %}
