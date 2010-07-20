@@ -10,19 +10,20 @@ sys.path.insert( 0, config.APP_ROOT_DIR )
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
-from handlers import user, feeds
+from handlers import user, feeds, content
 
 application = webapp.WSGIApplication(
 	[
-		( '/', user.MainPage ),
-		( '/register', user.RegisterPage ),
-		( '/pending', user.PendingPage ),
-		( '/subscriptions', feeds.SubscriptionsPage ),
-		( '/subscription', feeds.SubscriptionPage ),
-		( '/subscribe', feeds.SubscribePage ),
-		( '/unsubscribe', feeds.UnsubscribePage )
+		( '/', content.Home ),
+		( '/register', user.Register ),
+		( '/pending', user.Pending ),
+		( '/subscriptions', feeds.Subscriptions ),
+		( '/subscription', feeds.Subscription ),
+		( '/subscribe', feeds.Subscribe ),
+		( '/unsubscribe', feeds.Unsubscribe ),
+		( '/.*', content.FourOhFour )
 	],
-	debug=True )
+	debug=config.DEBUG )
 
 def main():
 	run_wsgi_app( application )

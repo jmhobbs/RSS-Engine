@@ -12,7 +12,7 @@ from google.appengine.ext.webapp.util import login_required
 from decorators import login_and_register
 import models
 
-class SubscriptionsPage ( webapp.RequestHandler ):
+class Subscriptions ( webapp.RequestHandler ):
 	@login_and_register
 	def get ( self ):
 		user = users.get_current_user()
@@ -24,7 +24,7 @@ class SubscriptionsPage ( webapp.RequestHandler ):
 		path = os.path.join( config.APP_TPL_DIR, 'subscriptions.html' )
 		self.response.out.write( template.render( path, template_values ) )
 
-class SubscriptionPage ( webapp.RequestHandler ):
+class Subscription ( webapp.RequestHandler ):
 	@login_and_register
 	def get ( self ):
 		user = users.get_current_user()
@@ -40,7 +40,7 @@ class SubscriptionPage ( webapp.RequestHandler ):
 		path = os.path.join( config.APP_TPL_DIR, 'subscription.html' )
 		self.response.out.write( template.render( path, template_values ) )
 
-class SubscribePage ( webapp.RequestHandler ):
+class Subscribe ( webapp.RequestHandler ):
 	@login_and_register
 	def get ( self ):
 		user = users.get_current_user()
@@ -75,7 +75,7 @@ class SubscribePage ( webapp.RequestHandler ):
 
 		self.redirect( '/subscriptions' )
 
-class UnsubscribePage ( webapp.RequestHandler ):
+class Unsubscribe ( webapp.RequestHandler ):
 	@login_and_register
 	def get ( self ):
 		user = users.get_current_user()

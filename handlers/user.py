@@ -12,7 +12,7 @@ from google.appengine.ext.webapp.util import login_required
 from decorators import login_and_register
 import models
 
-class MainPage ( webapp.RequestHandler ):
+class Main ( webapp.RequestHandler ):
 	@login_and_register
 	def get ( self ):
 		user = users.get_current_user()
@@ -20,7 +20,7 @@ class MainPage ( webapp.RequestHandler ):
 		path = os.path.join( config.APP_TPL_DIR, 'index.html' )
 		self.response.out.write( template.render( path, template_values ) )
 
-class RegisterPage ( webapp.RequestHandler ):
+class Register ( webapp.RequestHandler ):
 	@login_required
 	def get ( self ):
 		user = users.get_current_user()
@@ -50,7 +50,7 @@ class RegisterPage ( webapp.RequestHandler ):
 		else:
 			self.redirect( users.create_login_url( self.request.uri ) )
 
-class PendingPage ( webapp.RequestHandler ):
+class Pending ( webapp.RequestHandler ):
 	@login_required
 	def get ( self ):
 		user = users.get_current_user()
