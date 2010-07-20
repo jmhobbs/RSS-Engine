@@ -20,6 +20,7 @@ application = webapp.WSGIApplication(
 		( '/subscriptions', feeds.Subscriptions ),
 		( '/subscription', feeds.Subscription ),
 		( '/subscribe', feeds.Subscribe ),
+		( '/subscribe/confirm', feeds.SubscribeConfirm ),
 		( '/unsubscribe', feeds.Unsubscribe ),
 		( '/.*', content.FourOhFour )
 	],
