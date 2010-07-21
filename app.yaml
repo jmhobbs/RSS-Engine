@@ -15,11 +15,11 @@ handlers:
   static_dir: static/js
 
 - url: /queue/.*
-  script: handlers/queue.py
+  script: rssengine.py
   login: admin
 
 - url: /cron/.*
-  script: handlers/cron.py
+  script: rssengine.py
   login: admin
 
 - url: /.*

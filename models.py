@@ -13,6 +13,7 @@ class UserModel ( db.Model ):
 class FeedModel ( db.Model ):
 	path = db.StringProperty()
 	last_fetch = db.DateTimeProperty( auto_now_add=True )
+	last_story = db.DateTimeProperty()
 
 class SubscriptionModel ( db.Model ):
 	feed = db.ReferenceProperty( FeedModel )
@@ -22,8 +23,9 @@ class SubscriptionModel ( db.Model ):
 
 class FetchModel ( db.Model ):
 	feed = db.ReferenceProperty( FeedModel )
-	ran = db.DateTimeProperty( auto_now_add=True )
+	ran = db.DateTimeProperty( auto_now=True )
 	success = db.BooleanProperty()
+	new_stories = db.IntegerProperty()
 
 class StoryModel ( db.Model ):
 	feed = db.ReferenceProperty( FeedModel )
