@@ -10,7 +10,7 @@ sys.path.insert( 0, config.APP_ROOT_DIR )
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
-from handlers import user, feeds, content
+from handlers import user, feeds, content, queue, cron
 
 application = webapp.WSGIApplication(
 	[
@@ -22,6 +22,9 @@ application = webapp.WSGIApplication(
 		( '/subscribe', feeds.Subscribe ),
 		( '/subscribe/confirm', feeds.SubscribeConfirm ),
 		( '/unsubscribe', feeds.Unsubscribe ),
+		( '/cron/queue', cron.QueueFetches ),
+		( '/queue/fetch', queue.FetchRSS ),
+		( '/queue/mail', queue.SendMail ),
 		( '/.*', content.FourOhFour )
 	],
 	debug=config.DEBUG )

@@ -15,11 +15,11 @@ handlers:
   static_dir: static/js
 
 - url: /queue/.*
-  script: cronjobs.py
+  script: handlers/queue.py
   login: admin
 
 - url: /cron/.*
-  script: cronjobs.py
+  script: handlers/cron.py
   login: admin
 
 - url: /.*
