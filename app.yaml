@@ -3,6 +3,14 @@ version: 1
 runtime: python
 api_version: 1
 
+derived_file_type:
+- python_precompiled
+
+admin_console:
+  pages:
+  - name: Accounts Pending Approval
+    url: /admin/pending
+
 handlers:
 
 - url: /images
@@ -14,6 +22,10 @@ handlers:
 - url: /js
   static_dir: static/js
 
+- url: /favicon\.ico
+  static_files: static/favicon.ico
+  upload: static/favicon.ico
+
 - url: /queue/.*
   script: rssengine.py
   login: admin
@@ -24,3 +36,16 @@ handlers:
 
 - url: /.*
   script: rssengine.py
+
+skip_files:
+- ^(.*/)?app\.yaml
+- ^(.*/)?app\.yml
+- ^(.*/)?index\.yaml
+- ^(.*/)?index\.yml
+- ^(.*/)?#.*#
+- ^(.*/)?.*~
+- ^(.*/)?.*\.py[co]
+- ^(.*/)?.*/RCS/.*
+- ^(.*/)?\..*
+- ^(.*/)?LICENSE
+- ^(.*/)?.*.md$
